@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>모나코 에디터 샘플</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css"/>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.16.2/min/vs/loader.js"></script>
+
+  <script>
+    var editor;
+    
+    function selected_index(){
+        var lanSelect = document.getElementById("id-lan");
+        var selectValue = lanSelect.options[lanSelect.selectedIndex].text;
+        monaco.editor.setModelLanguage(editor.getModel(), selectValue);
+    }
+    function button_click(btn_id){
+        var id=document.getElementById(btn_id);
+        
+        if(btn_id=='btn_white'){
+            monaco.editor.setTheme('vs');
+        }
+        else{
+            monaco.editor.setTheme('vs-dark');
+        }    
+    }
+
+    require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.16.2/min/vs' }});
+    require(['vs/editor/editor.main'], function() {
+        //언어기본: markdown
+      editor = monaco.editor.create(document.getElementById('monaco'), {
+        theme: 'vs-white',
+        fontFamily: 'Nanum Gothic Coding',
+        automaticLayout: true,
+        language: 'c'
+      });
+
+      function saveI() 
+        {
+            getVal = editor.getValue()
+            // get the value of the data
+            alert(getVal)
+        }
+        //document.getElementById('test').onclick = saveI;
+    });
+    /*monaco.languages.registerCompletionItemProvider('newlang', {
+    provideCompletionItems: function(model, position) {
+        return createProposals();
+    }
+    });*/
+    
+  </script>
+  <style>
+      .table-striped{
+        width: 1000px;
+        height: 200px;
+      }
+      .form-control{
+          width: 1000px;
+      }
+      .input-output{
+        width: 1000px;
+      }
+      .outText{
+          margin-left: 20px;
+      }
+  </style>
+</head>
+<body>
+  <div class="container">
+      <div class="showProblem">
+          <div>문제 제목</div>
+          <div>설명</div>
+          <div class="outText">gg</div>
+          <div>입력</div>
+          <div class="outText">gg</div>
+          <div>출력</div>
+          <div class="outText">gg</div>
+          <form id="frm" name="frm" method="post" action="/insertCode.do">
+            <table class="input-output" style="text-align: left; border: 1px">
+                <thead>
+                    <tr>
+                        <th>예시 입력</th>
+                        <th>예시 출력</th>
+                    </tr>
+                </thead>
+                <tbody>
+                	<tr>
+						<td><textarea id="code_contents" name="code_contents"></textarea></td>
+					</tr>
+                    <tr>
+                        <th>예시 입력1</th>
+                        <th>예시 출력1</th>
+                    </tr>
+                </tbody>
+            </table>
+            <input type="submit" id="submit" class="btn btn-secondary pull-right" value="제출">
+          </form>
+      </div>
+      <div class="solutionSubmit">
+        <form >
+            <table class="table-striped" style="text-align: left; border: 1px solid #dddddd">
+                <thead>
+                    <tr>
+   
+                            <select id="id-lan" name="language" onchange="selected_index()" size="1">
+                                <option value = "C">c</option>
+                                <option value = "cpp">cpp</option>
+                                <option value = "python">python</option>
+                                <option value = "java">java</option>
+                                <option value = "java">javascript</option>
+                            </select>
+                            <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                                <button id= "btn_white" type="button" class="btn btn-secondary" onClick="button_click(this.id)">white</button>
+                                <button id= "btn_black" type="button" class="btn btn-secondary" onClick="button_click(this.id)">dark</button>
+                            </div>
+                            
+               
+                    </tr>
+                </thead>
+                <tbody>
+					
+					
+                    <tr>
+                        <td>
+                            <div id="monaco" style="height:200px"></div>
+                        </td>
+                    </tr>
+                </tbody>
+                
+            </table>
+            <input type="submit" id="submit" class="btn btn-secondary pull-right" value="제출">
+            <button id= "test" type="button" class="btn btn-secondary" onClick="saveI()">test</button>
+        </form>   
+      </div>
+  </div>
+</body>
+</html>

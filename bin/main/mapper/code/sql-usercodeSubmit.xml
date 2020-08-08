@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="codeEditer.codeEditer.mapper.CodeEditerMapper">
+	<insert id="insertCode" parameterType="codeEditer.codeEditer.dto.CodeEditerDto" useGeneratedKeys="true" keyProperty="code_idx">
+		<![CDATA[
+			INSERT INTO usercode
+			(
+				code_contents
+			)
+			VALUES
+			(
+				#{code_contents}
+			)
+		]]>
+	
+	</insert>
+</mapper>
